@@ -1,0 +1,12 @@
+version: "3.1"
+services:
+  db:
+    container_name: mongoDB
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./donateDaangn:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE= Donate
+    ports:
+      - 27017:27017
