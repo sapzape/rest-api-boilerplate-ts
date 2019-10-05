@@ -3,6 +3,7 @@ import { getRepository } from "typeorm"
 import { validate } from "class-validator"
 
 import { User } from "../entity/User"
+import { VALIDATION_ERROR_MESSAGE } from "../constants/message.constants"
 
 export class UserService {
   public async listAll(req: Request, res: Response): Promise<any> {
@@ -35,7 +36,7 @@ export class UserService {
     user.role = role
 
     const errors = await validate(user)
-    if (errors.length > 0) return res.status(400).send(errors)
+    if (errors.length > 0) return res.status(400).send(VALIDATION_ERROR_MESSAGE)
 
     user.hashPassword()
 
@@ -63,7 +64,7 @@ export class UserService {
     user.username = username
     user.role = role
     const errors = await validate(user)
-    if (errors.length > 0) return res.status(404).send("validation error")
+    if (errors.length > 0) return res.status(404).send(VALIDATION_ERROR_MESSAGE)
 
     try {
       const userRepository = getRepository(User)

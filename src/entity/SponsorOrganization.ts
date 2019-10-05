@@ -3,7 +3,7 @@ import { IsNotEmpty } from "class-validator"
 
 @Entity()
 @Index(["userId", "organizationId", "createdAt"], { unique: true })
-export class Donate {
+export class SponsorOrganization {
   @PrimaryGeneratedColumn()
   id: number
 

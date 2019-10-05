@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
-import { JWT_SECRET } from "../constants/config.constants"
+import { JWT_SECRET, EXPIRES_TIME } from "../constants/config.constants"
 
 export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   const token = <string>req.headers["authorization"]
@@ -15,7 +15,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
 
   const { userId, username } = jwtPayload
   const newToken = jwt.sign({ userId, username }, JWT_SECRET, {
-    expiresIn: "1h"
+    expiresIn: EXPIRES_TIME
   })
   res.setHeader("token", newToken)
 

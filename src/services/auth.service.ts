@@ -4,7 +4,8 @@ import { getRepository } from "typeorm"
 import { validate } from "class-validator"
 
 import { User } from "../entity/User"
-import { JWT_SECRET } from "../constants/config.constants"
+import { JWT_SECRET, EXPIRES_TIME } from "../constants/config.constants"
+import { VALIDATION_ERROR_MESSAGE } from "../constants/message.constants"
 
 export class AuthService {
   public async login(req: Request, res: Response): Promise<any> {
@@ -23,7 +24,7 @@ export class AuthService {
     if (!user.checkCryptPasswordIsValid(password)) return res.status(401).send()
 
     const token = jwt.sign({ userId: user.id, username: user.username }, JWT_SECRET, {
-      expiresIn: "1h"
+      expiresIn: EXPIRES_TIME
     })
 
     return res.send(token)
@@ -44,7 +45,7 @@ export class AuthService {
 
     user.password = newPassword
     const errors = await validate(user)
-    if (errors.length > 0) return res.status(400).send(errors)
+    if (errors.length > 0) return res.status(400).send(VALIDATION_ERROR_MESSAGE)
 
     user.hashPassword()
     userRepository.save(user)
