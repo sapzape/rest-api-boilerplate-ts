@@ -1,67 +1,32 @@
-import { Request, Response } from "express"
-import jwt from "jsonwebtoken"
-import { getRepository } from "typeorm"
+import "reflect-metadata"
+import { Service } from "typedi"
+import { OrmRepository } from "typeorm-typedi-extensions"
 import { validate } from "class-validator"
-import { JsonController, Post } from "routing-controllers"
+import jwt from "jsonwebtoken"
 
-import { User } from "../entity/User"
+import { UserRepository } from "../repositories/user.repository"
+import { User } from "../models/User"
 import { JWT_SECRET, EXPIRES_TIME } from "../constants/config.constants"
-import { VALIDATION_ERROR_MESSAGE } from "../constants/message.constants"
 
-@JsonController("/auth")
+@Service()
 export class AuthService {
-  @Post("/login")
-  public async login(req: Request, res: Response): Promise<any> {
-    let { username, password } = req.body
-    // if (!(username && password)) return res.status(400).send()
-    if (!(username && password)) return
+  constructor(@OrmRepository() private userRepository: UserRepository) {}
 
-    const userRepository = getRepository(User)
-    let user: User
-
-    try {
-      user = await userRepository.findOneOrFail({ where: { username } })
-    } catch (error) {
-      // return res.status(401).send()
-      return
-    }
-
-    // if (!user.checkCryptPasswordIsValid(password)) return res.status(401).send()
-    if (!user.checkCryptPasswordIsValid(password)) return
-
+  public async createToken(user: User): Promise<string> {
     const token = jwt.sign({ userId: user.id, username: user.username }, JWT_SECRET, {
       expiresIn: EXPIRES_TIME
     })
-
-    // return res.send(token)
     return token
   }
 
-  @Post("/change-password")
-  public async changePassword(req: Request, res: Response): Promise<any> {
-    const id = res.locals.jwtPayload.userId
-    const { oldPassword, newPassword } = req.body
-    // if (!(oldPassword && newPassword)) return res.status(400).send()
-    if (!(oldPassword && newPassword)) return
-
-    const userRepository = getRepository(User)
-    let user: User
-    try {
-      user = await userRepository.findOneOrFail(id)
-    } catch (error) {
-      // return res.status(401).send()
-      return
-    }
-
+  public async changePassword(newPassword: string, user: User): Promise<User | boolean> {
     user.password = newPassword
     const errors = await validate(user)
-    // if (errors.length > 0) return res.status(400).send(VALIDATION_ERROR_MESSAGE)
-    if (errors.length > 0) return VALIDATION_ERROR_MESSAGE
+    if (errors.length > 0) return false
 
     user.hashPassword()
-    userRepository.save(user)
 
-    // return res.status(204).send()
-    return
+    const updateUser = await this.userRepository.save(user)
+    return updateUser
   }
 }

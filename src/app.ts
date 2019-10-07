@@ -1,16 +1,33 @@
 import "reflect-metadata"
-import { createExpressServer, Action } from "routing-controllers"
+import {
+  createExpressServer,
+  useContainer as routingUseContainer,
+  Action
+} from "routing-controllers"
+import { Container } from "typedi"
+import { useContainer as ormUseContainer } from "typeorm"
 import { Application } from "express"
 import bodyParser from "body-parser"
-import { AuthService } from "./services/auth.service"
-import { UserService } from "./services/user.service"
+import { AuthController } from "./controllers/auth.controller"
+import { UserController } from "./controllers/user.controller"
 
 class App {
   public app: Application
 
   constructor() {
+    this.iocLoader()
+    this.createExpressServer()
+    this.setConfig()
+  }
+
+  private iocLoader() {
+    routingUseContainer(Container)
+    ormUseContainer(Container)
+  }
+
+  private createExpressServer() {
     this.app = createExpressServer({
-      controllers: [AuthService, UserService],
+      controllers: [AuthController, UserController],
       authorizationChecker: async (action: Action, roles: string[]) => {
         return true
       },
@@ -18,7 +35,6 @@ class App {
         return true
       }
     })
-    this.setConfig()
   }
 
   private setConfig() {
