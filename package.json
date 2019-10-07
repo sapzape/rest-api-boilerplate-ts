@@ -8,6 +8,7 @@
     "start": "nodemon",
     "prod": "tsc && node ./build/app.js",
     "test": "jest",
+    "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n CreateAdminUser",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "author": "Jongheon Kim <sapzape@gmail.com> (https://blog.shovelman.dev/",
