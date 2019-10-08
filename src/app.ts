@@ -1,11 +1,5 @@
 import "reflect-metadata"
-import {
-  createExpressServer,
-  useContainer as routingUseContainer,
-  Action
-} from "routing-controllers"
-import { Container } from "typedi"
-import { useContainer as ormUseContainer } from "typeorm"
+import { createExpressServer, Action } from "routing-controllers"
 import { Application } from "express"
 import bodyParser from "body-parser"
 import { AuthController } from "./controllers/auth.controller"
@@ -15,14 +9,8 @@ class App {
   public app: Application
 
   constructor() {
-    this.iocLoader()
     this.createExpressServer()
     this.setConfig()
-  }
-
-  private iocLoader() {
-    routingUseContainer(Container)
-    ormUseContainer(Container)
   }
 
   private createExpressServer() {
