@@ -1,6 +1,7 @@
 import { Application } from "express"
 import { Connection } from "typeorm"
 
+import "../../src/env"
 import App from "../../src/app"
 import { createDBConnection, migrationDB } from "./database.setting"
 
@@ -13,8 +14,7 @@ export const prepareServer = async (options?: { migrate: boolean }) => {
   let server: Application
   let connection = await createDBConnection()
   server = new App().app
-  server.listen(8888, () => console.log(`Listening on port 8888`))
-  //todo(sapzape) need to separate env value
+  server.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`))
   if (options && options.migrate) {
     await migrationDB(connection)
   }

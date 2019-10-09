@@ -7,6 +7,7 @@ import * as path from "path"
 import * as swaggerUi from "swagger-ui-express"
 import basicAuth from "express-basic-auth"
 
+import "./env"
 import { AuthController } from "./controllers/auth.controller"
 import { UserController } from "./controllers/user.controller"
 
@@ -37,7 +38,7 @@ class App {
   }
 
   private setSwagger() {
-    const swaggerFile = require(path.join(__dirname, "..", "/src/swagger.json"))
+    const swaggerFile = require(path.join(__dirname, "..", `${process.env.SWAGGER_FILE}`))
     swaggerFile.info = {
       title: "util-donate",
       description: "",
@@ -46,16 +47,14 @@ class App {
 
     swaggerFile.servers = [
       {
-        //todo(sapzape) need to separate env value
-        url: `http://localhost:8080`
+        url: `${process.env.APP_SCHEMA}://${process.env.APP_HOST}:${process.env.PORT}`
       }
     ]
-    //todo(sapzape) need to separate env value
     this.app.use(
-      "/swagger",
+      `${process.env.SWAGGER_ROUTE}`,
       basicAuth({
         users: {
-          ["admin"]: "admin"
+          [`${process.env.SWAGGER_USERNAME}`]: `${process.env.SWAGGER_PASSWORD}`
         },
         challenge: true
       }),
