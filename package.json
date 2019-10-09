@@ -14,14 +14,18 @@
   "author": "Jongheon Kim <sapzape@gmail.com> (https://blog.shovelman.dev/",
   "license": "ISC",
   "dependencies": {
+    "@types/swagger-ui-express": "^3.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "class-transformer": "^0.2.3",
     "class-validator": "^0.10.1",
     "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.8.0",
     "sqlite3": "^4.0.3",
+    "swagger-ui-express": "^4.1.2",
     "typedi": "^0.8.0",
     "typeorm": "0.2.19",
     "typeorm-typedi-extensions": "^0.2.3"

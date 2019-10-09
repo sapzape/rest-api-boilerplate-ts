@@ -1,0 +1,160 @@
+{
+  "openapi": "3.0.0",
+  "servers": [],
+  "info": {
+    "title": "",
+    "description": "",
+    "version": ""
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Donate"
+    },
+    {
+      "name": "Sponsor"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "List all users",
+        "description": "Return all users",
+        "operationId": "listAll",
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "contents": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "summary": "Create new user",
+        "description": "",
+        "operationId": "newUser",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewUser"
+        }
+      }
+    }
+  },
+  "components": {
+    "requestBodies": {
+      "NewUser": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NewUser"
+            }
+          }
+        },
+        "description": "User object that needs to be added to the database",
+        "required": true
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "schemas": {
+      "NewUser": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "title": "User",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
