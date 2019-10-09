@@ -1,18 +1,21 @@
-import { Request, Response } from "express"
-import { getRepository } from "typeorm"
-import { validate } from "class-validator"
+import "reflect-metadata"
+import { Service } from "typedi"
+import { OrmRepository } from "typeorm-typedi-extensions"
 
-import { Donate } from "../entity/Donate"
-import { VALIDATION_ERROR_MESSAGE } from "../constants/message.constants"
+import { DonateRepository } from "../repositories/donate.repository"
+import { Donate } from "../models/Donate"
 
+@Service()
 export class DonateService {
-  public async listAll(req: Request, res: Response): Promise<any> {}
+  constructor(@OrmRepository() private donateRepository: DonateRepository) {}
 
-  public async getListById(req: Request, res: Response): Promise<any> {}
+  public async listAll(): Promise<any> {}
 
-  public async addDonate(req: Request, res: Response): Promise<any> {}
+  public async getListById(): Promise<any> {}
 
-  public async editDonate(req: Request, res: Response): Promise<any> {}
+  public async addDonate(): Promise<any> {}
 
-  // public async deleteUser(req: Request, res: Response): Promise<any> {}
+  public async editDonate(): Promise<any> {}
+
+  // public async deleteUser(): Promise<any> {}
 }
