@@ -11,7 +11,6 @@ export class UserService {
   constructor(@OrmRepository() private userRepository: UserRepository) {}
 
   public async find(): Promise<User[]> {
-    console.log("?????")
     return await this.userRepository.find({
       select: ["id", "username", "role"]
     })
