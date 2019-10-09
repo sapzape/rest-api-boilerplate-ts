@@ -1,7 +1,6 @@
 import "reflect-metadata"
 import { Service } from "typedi"
 import { OrmRepository } from "typeorm-typedi-extensions"
-import { validate } from "class-validator"
 import jwt from "jsonwebtoken"
 
 import { UserRepository } from "../repositories/user.repository"
@@ -21,9 +20,6 @@ export class AuthService {
 
   public async changePassword(newPassword: string, user: User): Promise<User | boolean> {
     user.password = newPassword
-    const errors = await validate(user)
-    if (errors.length > 0) return false
-
     user.hashPassword()
 
     const updateUser = await this.userRepository.save(user)

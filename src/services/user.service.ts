@@ -1,7 +1,6 @@
 import "reflect-metadata"
 import { Service } from "typedi"
 import { OrmRepository } from "typeorm-typedi-extensions"
-import { validate } from "class-validator"
 
 import { UserRepository } from "../repositories/user.repository"
 import { User } from "../models/User"
@@ -22,10 +21,7 @@ export class UserService {
     })
   }
 
-  public async create(user: User): Promise<User | boolean> {
-    const errors = await validate(user)
-    if (errors.length > 0) return false
-
+  public async create(user: User): Promise<User> {
     user.hashPassword()
     const newUser = await this.userRepository.save(user)
     return newUser
