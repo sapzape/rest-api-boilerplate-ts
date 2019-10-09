@@ -11,13 +11,17 @@ export interface Settings {
 }
 
 export const prepareServer = async (options?: { migrate: boolean }) => {
-  let server: Application
-  let connection = await createDBConnection()
-  server = new App().app
-  server.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`))
+  const settings = await createApp()
   if (options && options.migrate) {
-    await migrationDB(connection)
+    await migrationDB(settings.connection)
   }
+
+  return settings
+}
+
+const createApp = async (): Promise<Settings> => {
+  let server = new App().app
+  let connection = await createDBConnection()
 
   return { app: server, connection: connection } as Settings
 }
