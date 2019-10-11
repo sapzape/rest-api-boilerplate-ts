@@ -10,6 +10,7 @@ import basicAuth from "express-basic-auth"
 import "./env"
 import { AuthController } from "./controllers/auth.controller"
 import { UserController } from "./controllers/user.controller"
+import { checkJwt } from "./middlewares/checkJwt"
 
 class App {
   public app: Application
@@ -24,11 +25,9 @@ class App {
     useContainer(Container)
     this.app = createExpressServer({
       controllers: [AuthController, UserController],
-      authorizationChecker: async (action: Action, roles: string[]) => {
-        return true
-      },
-      currentUserChecker: async (action: Action) => {
-        return true
+      authorizationChecker: async (action: Action) => {
+        const token = action.request.headers["authorization"]
+        return await checkJwt(token)
       }
     })
   }

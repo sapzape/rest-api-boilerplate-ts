@@ -1,23 +1,19 @@
-import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
-import { JWT_SECRET, EXPIRES_TIME } from "../constants/config.constants"
+import "../env"
 
-export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
-  const token = <string>req.headers["authorization"]
-  let jwtPayload
-
+export const checkJwt = (token: string) => {
+  let payload
   try {
-    jwtPayload = <any>jwt.verify(token, JWT_SECRET)
-    res.locals.jwtPayload = jwtPayload
+    payload = <any>jwt.verify(token, <string>process.env.JWT_SECRET)
   } catch (error) {
-    return res.status(401).send(error)
+    return false
   }
+  return true
 
-  const { userId, username } = jwtPayload
-  const newToken = jwt.sign({ userId, username }, JWT_SECRET, {
-    expiresIn: EXPIRES_TIME
-  })
-  res.setHeader("token", newToken)
+  // const { userId, username } = payload
+  // const newToken = jwt.sign({ userId, username }, <string>process.env.JWT_SECRET, {
+  //   expiresIn: process.env.JWT_EXPIRES_TIME
+  // })
 
-  return next()
+  // return newToken
 }
