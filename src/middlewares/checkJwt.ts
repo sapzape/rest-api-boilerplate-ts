@@ -9,11 +9,4 @@ export const checkJwt = (token: string) => {
     return false
   }
   return true
-
-  // const { userId, username } = payload
-  // const newToken = jwt.sign({ userId, username }, <string>process.env.JWT_SECRET, {
-  //   expiresIn: process.env.JWT_EXPIRES_TIME
-  // })
-
-  // return newToken
 }
