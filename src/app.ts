@@ -24,10 +24,17 @@ class App {
   private createExpressServer() {
     useContainer(Container)
     this.app = createExpressServer({
-      controllers: [AuthController, UserController],
+      controllers: [path.join(__dirname, "..", `${process.env.CONTROLLERS}`)],
       authorizationChecker: async (action: Action) => {
         const token = action.request.headers["authorization"]
         return await checkJwt(token)
+      },
+      defaults: {
+        nullResultCode: 404,
+        undefinedResultCode: 204,
+        paramOptions: {
+          required: true
+        }
       }
     })
   }

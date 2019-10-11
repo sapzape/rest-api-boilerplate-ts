@@ -8,13 +8,13 @@ import { Sponsor } from "../models/Sponsor"
 @Service()
 export class SponsorService {
   constructor(@OrmRepository() private sponsorRepository: SponsorRepository) {}
-  public async listAll(): Promise<any> {}
+  public async find(): Promise<any> {}
 
-  public async getOneById(): Promise<any> {}
+  public async findOneOrFail(): Promise<any> {}
 
-  public async addSponsor(): Promise<any> {}
+  public async create(): Promise<any> {}
 
-  public async editSponsor(): Promise<any> {}
+  public async update(): Promise<any> {}
 
-  public async deleteSponsor(): Promise<any> {}
+  public async delete(): Promise<any> {}
 }

@@ -16,13 +16,15 @@ export class User {
   id: number
 
   @Column()
+  @IsNotEmpty()
   @Length(4, 20)
   username: string
 
   @Column()
+  @IsNotEmpty()
   password: string
 
-  @Column()
+  @Column({ default: "USER" })
   @IsNotEmpty()
   role: string
 

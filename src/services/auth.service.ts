@@ -5,24 +5,27 @@ import jwt from "jsonwebtoken"
 
 import { UserRepository } from "../repositories/user.repository"
 import { User } from "../models/User"
-import { JWT_SECRET, EXPIRES_TIME } from "../constants/config.constants"
+import "../env"
 
 @Service()
 export class AuthService {
   constructor(@OrmRepository() private userRepository: UserRepository) {}
 
   public async createToken(user: User): Promise<string> {
-    const token = jwt.sign({ userId: user.id, username: user.username }, JWT_SECRET, {
-      expiresIn: EXPIRES_TIME
-    })
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      <string>process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES_TIME
+      }
+    )
     return token
   }
 
-  public async changePassword(newPassword: string, user: User): Promise<User | boolean> {
-    user.password = newPassword
-    user.hashPassword()
-
-    const updateUser = await this.userRepository.save(user)
-    return updateUser
+  public async changePassword(user: User): Promise<User | boolean> {
+    const one = await this.userRepository.findOneOrFail(user.id)
+    one.password = user.password
+    one.hashPassword()
+    return await this.userRepository.save(one)
   }
 }
