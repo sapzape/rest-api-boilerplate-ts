@@ -12,8 +12,9 @@ export class AuthService {
   constructor(@OrmRepository() private userRepository: UserRepository) {}
 
   public async createToken(user: User): Promise<string> {
+    const one = await this.userRepository.findOneOrFail(user.id)
     const token = jwt.sign(
-      { userId: user.id, username: user.username },
+      { userId: one.id, username: one.username },
       <string>process.env.JWT_SECRET,
       {
         expiresIn: process.env.JWT_EXPIRES_TIME

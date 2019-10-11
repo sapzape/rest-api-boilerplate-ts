@@ -12,16 +12,17 @@ import {
 import { UserService } from "../services/user.service"
 import { User } from "../models/User"
 
-@Authorized()
 @JsonController("/user")
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @Authorized()
   @Get()
   public listAll(): Promise<User[]> {
     return this.userService.find()
   }
 
+  @Authorized()
   @Get("/:id([0-9]+)")
   public getOneById(@Param("id") id: number): Promise<User | undefined> {
     return this.userService.findOneOrFail(id)
@@ -32,6 +33,7 @@ export class UserController {
     return this.userService.create(user)
   }
 
+  @Authorized()
   @Patch("/:id([0-9]+)")
   public editUser(@Param("id") id: number, @Body() user: User): Promise<User> {
     return this.userService.update(id, user)

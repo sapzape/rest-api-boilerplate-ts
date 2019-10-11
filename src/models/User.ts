@@ -6,12 +6,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn
 } from "typeorm"
-import { Length, IsNotEmpty } from "class-validator"
+import { Length, IsNotEmpty, IsNumber } from "class-validator"
 import bcrypt from "bcryptjs"
 
 @Entity()
 @Unique(["username"])
 export class User {
+  // fixme(sapzape) when value is 'undefined', it is treated as 1
   @PrimaryGeneratedColumn()
   id: number
 
@@ -24,8 +25,8 @@ export class User {
   @IsNotEmpty()
   password: string
 
+  // fixme(sapzape) default value don't work
   @Column({ default: "USER" })
-  @IsNotEmpty()
   role: string
 
   @Column()

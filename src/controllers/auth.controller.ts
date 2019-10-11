@@ -1,4 +1,4 @@
-import { JsonController, Post, Body } from "routing-controllers"
+import { JsonController, Post, Body, Authorized } from "routing-controllers"
 import { User } from "../models/User"
 import { AuthService } from "../services/auth.service"
 
@@ -11,6 +11,7 @@ export class AuthController {
     return this.authService.createToken(user)
   }
 
+  @Authorized()
   @Post("/change-password")
   public changePassword(@Body() user: User): Promise<User | boolean> {
     return this.authService.changePassword(user)
