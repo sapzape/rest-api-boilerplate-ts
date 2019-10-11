@@ -12,7 +12,6 @@ import {
 import { SponsorService } from "../services/sponsor.service"
 import { Sponsor } from "../models/Sponsor"
 
-@Authorized()
 @JsonController("/sponsor")
 export class SponsorController {
   constructor(private sponsorService: SponsorService) {}

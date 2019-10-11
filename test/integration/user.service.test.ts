@@ -9,8 +9,9 @@ describe("UserService", () => {
   let connection: Connection
   beforeAll(async () => {
     connection = await createDBConnection()
+    await migrationDB(connection)
   })
-  beforeEach(() => migrationDB(connection))
+
   afterEach(() => closeDB(connection))
 
   test("should create a new user in the database", async done => {

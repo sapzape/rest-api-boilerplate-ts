@@ -16,7 +16,7 @@ export class SponsorService {
 
   public async findOneOrFail(id: number): Promise<Sponsor | undefined> {
     return await this.sponsorRepository.findOneOrFail(id, {
-      select: ["id", "regionCode", "organizationName", "phone", "address", "homepage"]
+      select: ["id", "regionCode", "organizationName", "account", "phone", "address", "homepage"]
     })
   }
 
