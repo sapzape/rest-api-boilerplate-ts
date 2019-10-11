@@ -16,9 +16,13 @@ describe("/user", () => {
 
   test("GET: / should return a list of users", async done => {
     const response = await request(settings.app)
-      .get("/user")
+      .get("/user/1")
       .expect("Content-Type", /json/)
       .expect(200)
+
+    expect(response.body.id).toBe(1)
+    expect(response.body.username).toBe("admin")
+    expect(response.body.role).toBe("ADMIN")
     done()
   })
 })
