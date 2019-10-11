@@ -1,18 +1,47 @@
-import { JsonController } from "routing-controllers"
+import {
+  Authorized,
+  JsonController,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body
+} from "routing-controllers"
 
 import { SponsorService } from "../services/sponsor.service"
+import { Sponsor } from "../models/Sponsor"
 
+@Authorized()
 @JsonController("/sponsor")
 export class SponsorController {
   constructor(private sponsorService: SponsorService) {}
 
-  public async listAll(): Promise<any> {}
+  @Get()
+  public async listAll(): Promise<Sponsor[]> {
+    return this.sponsorService.find()
+  }
 
-  public async getOneById(): Promise<any> {}
+  @Get("/:id([0-9]+)")
+  public async getOneById(@Param("id") id: number): Promise<Sponsor | undefined> {
+    return this.sponsorService.findOneOrFail(id)
+  }
 
-  public async addSponsor(): Promise<any> {}
+  @Authorized()
+  @Post()
+  public async newSponsor(@Body() sponsor: Sponsor): Promise<Sponsor | boolean> {
+    return this.sponsorService.create(sponsor)
+  }
 
-  public async editSponsor(): Promise<any> {}
+  @Authorized()
+  @Patch("/:id([0-9]+)")
+  public async editSponsor(@Param("id") id: number, @Body() sponsor: Sponsor): Promise<Sponsor> {
+    return this.sponsorService.update(id, sponsor)
+  }
 
-  public async deleteSponsor(): Promise<any> {}
+  @Authorized()
+  @Delete("/:id([0-9]+)")
+  public async deleteSponsor(@Param("id") id: number): Promise<void> {
+    return this.sponsorService.delete(id)
+  }
 }

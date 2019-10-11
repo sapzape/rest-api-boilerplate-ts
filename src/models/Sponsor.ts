@@ -1,25 +1,51 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn } from "typeorm"
-import { IsNotEmpty } from "class-validator"
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Unique,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Index
+} from "typeorm"
+import { Length, IsNotEmpty } from "class-validator"
 
 @Entity()
-@Index(["userId", "sponsorId", "createdAt"], { unique: true })
+@Index(["regionCode", "organizationName", "address"], { unique: true })
 export class Sponsor {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
   @IsNotEmpty()
-  userId: string
+  @Length(1, 10)
+  regionCode: number
 
   @Column()
   @IsNotEmpty()
-  sponsorId: number
+  @Length(2, 20)
+  organizationName: string
 
   @Column()
   @IsNotEmpty()
-  amount: number
+  account: string
+
+  @Column()
+  @Length(8, 15)
+  phone: string
+
+  @Column()
+  @IsNotEmpty()
+  address: string
+
+  @Column()
+  @IsNotEmpty()
+  homepage: string
 
   @Column()
   @CreateDateColumn()
   createdAt: Date
+
+  @Column()
+  @UpdateDateColumn()
+  updatedAt: Date
 }
