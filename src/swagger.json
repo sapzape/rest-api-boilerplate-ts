@@ -14,9 +14,6 @@
       "name": "Auth"
     },
     {
-      "name": "Donate"
-    },
-    {
       "name": "Sponsor"
     }
   ],
@@ -92,6 +89,370 @@
           "$ref": "#/components/requestBodies/NewUser"
         }
       }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "get one user",
+        "description": "Return user",
+        "operationId": "getOneById",
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "contents": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Edit user",
+        "description": "",
+        "operationId": "editUser",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewUser"
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete user",
+        "description": "",
+        "operationId": "deleteUser",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewUser"
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Create access token",
+        "description": "Return token",
+        "operationId": "login",
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "contents": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "auth/change-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Change password one user",
+        "description": "",
+        "operationId": "changePassword",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewUser"
+        }
+      }
+    },
+    "/sponsor": {
+      "get": {
+        "tags": ["Sponsor"],
+        "summary": "List all sponsor",
+        "description": "Return all sponsors",
+        "operationId": "listAll",
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "contents": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Sponsor"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Sponsor"],
+        "summary": "Create new sponsor",
+        "description": "",
+        "operationId": "newSponsor",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Sponsor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewSponsor"
+        }
+      }
+    },
+    "/sponsor/{id}": {
+      "get": {
+        "tags": ["Sponsor"],
+        "summary": "get one sponsor",
+        "description": "Return sponsor",
+        "operationId": "getOneById",
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "contents": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Sponsor"],
+        "summary": "Edit sponsor",
+        "description": "",
+        "operationId": "editSponsor",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewUser"
+        }
+      },
+      "delete": {
+        "tags": ["Sponsor"],
+        "summary": "Delete sponsor",
+        "description": "",
+        "operationId": "deleteSponsor",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Sponsor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewSponsor"
+        }
+      }
     }
   },
   "components": {
@@ -143,6 +504,41 @@
             "type": "string"
           },
           "role": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Sponsor": {
+        "title": "Sponsor",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "regionCode": {
+            "type": "number"
+          },
+          "organizationName": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "homepage": {
             "type": "string"
           },
           "updatedAt": {
