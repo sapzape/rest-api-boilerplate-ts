@@ -23,6 +23,7 @@ export const syncDB = async (connection: Connection) => {
 
 export const migrationDB = async (connection: Connection) => {
   await connection.dropDatabase()
+  await connection.synchronize(true)
   return connection.runMigrations()
 }
 
