@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`TypeScript` + `NodeJS` + practice repository for learning REST API server. You can also look at the boilerplate project.
+`TypeScript` + `NodeJS` + practice repository for learning REST API server. You can also look at the boilerplate project. Functions are separated by `controller`, `service`, `repository`, and `model`.
 
 The features are as follows.
 
