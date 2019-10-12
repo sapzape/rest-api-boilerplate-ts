@@ -12,7 +12,7 @@ describe("UserService", () => {
     await migrationDB(connection)
   })
 
-  afterEach(() => closeDB(connection))
+  afterAll(async () => await closeDB(connection))
 
   test("should create a new user in the database", async done => {
     const user = new User()

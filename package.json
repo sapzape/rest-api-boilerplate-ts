@@ -7,7 +7,7 @@
     "tsc": "tsc",
     "start": "nodemon",
     "prod": "tsc && node ./build/app.js",
-    "test": "jest --forceExit --coverage --verbose",
+    "test": "jest --detectOpenHandles --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
     "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n CreateAdminUser",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",

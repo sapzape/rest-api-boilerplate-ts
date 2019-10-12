@@ -18,6 +18,7 @@ export class Sponsor {
   @Column()
   @IsNotEmpty()
   @Length(1, 10)
+  // see(sapzape) http://stat.kita.net/stat/kts/statCode/ProdCodeList.screen
   regionCode: number
 
   @Column()
