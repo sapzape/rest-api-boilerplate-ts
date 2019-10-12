@@ -3,7 +3,7 @@ import { createConnection, useContainer as ormUseContainer, ConnectionOptions } 
 import Container from "typedi"
 import * as path from "path"
 
-import App from "./App"
+import App from "./app"
 import "./env"
 
 const connectionOpts: ConnectionOptions = {
