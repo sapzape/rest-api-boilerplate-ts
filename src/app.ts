@@ -44,7 +44,7 @@ class App {
   private setSwagger() {
     const swaggerFile = require(path.join(__dirname, "..", `${process.env.SWAGGER_FILE}`))
     swaggerFile.info = {
-      title: "util-donate",
+      title: "REST API Boilerplate using TypeScript",
       description: "",
       version: "1.0.0"
     }

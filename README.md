@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`TypeScript` + `NodeJS` + practice repository for learning REST API server. You can also look at the boilerplate project. Functions are separated by `controller`, `service`, `repository`, and `model`.
+`TypeScript` + `NodeJS` + practice repository for learning REST API server.Functions are separated by `controller`, `service`, `repository`, and `model`. You can also look at the boilerplate project.
 
 The features are as follows.
 
@@ -18,14 +18,16 @@ The features are as follows.
 2.  Install `mysql` and run.
 3.  Execute `npm install` to install the development dependencies.
 4.  Create DB table (see `.env` file)
-5.  `npm run start`
+5.  `npm run schema:sync`
 6.  `npm run migration:run`
+7.  `npm run start`
 
 ## CLI Interface
 
 1. test : `npm run test`
-2. db migration create : `npm run migration:create`
-3. db migration run : `npm run migration:run`
+2. db sync : `npm run schema:sync`
+3. db migration create : `npm run migration:create`
+4. db migration run : `npm run migration:run`
 
 ## API Specification
 
