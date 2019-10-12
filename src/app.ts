@@ -8,8 +8,6 @@ import * as swaggerUi from "swagger-ui-express"
 import basicAuth from "express-basic-auth"
 
 import "./env"
-import { AuthController } from "./controllers/auth.controller"
-import { UserController } from "./controllers/user.controller"
 import { checkJwt } from "./middlewares/checkJwt"
 
 class App {

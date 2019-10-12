@@ -23,12 +23,8 @@ describe("SponsorService", () => {
     sponsor.account = "123-4567-891011"
     sponsor.homepage = "www.aaa.bbb"
 
-    console.log("sponsor : ", sponsor)
-
     const service = Container.get<SponsorService>(SponsorService)
-
     const newSponsor = await service.create(sponsor)
-    console.log("newSponsor : ", newSponsor)
     expect(newSponsor.regionCode).toBe(sponsor.regionCode)
     expect(newSponsor.organizationName).toBe(sponsor.organizationName)
     expect(newSponsor.phone).toBe(sponsor.phone)

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, getRepository, Table } from "typeorm"
+import { MigrationInterface, QueryRunner, getRepository } from "typeorm"
 import { User } from "../../models/User"
 
 export class CreateAdminUser1570606015337 implements MigrationInterface {
